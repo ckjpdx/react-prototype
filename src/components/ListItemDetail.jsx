@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ListItemDetail(props){
+function ListTicketDetail(props){
   return (
     <div>
       <hr/>
-      <h1>{props.selectedItem.names} - {props.selectedItem.location}</h1>
-      <h2>Submitted {props.selectedItem.formattedWaitTime} ago</h2>
-      <h4><em>{props.selectedItem.issue}</em></h4>
+      <h1>{props.selectedTicket.names} - {props.selectedTicket.location}</h1>
+      <h2>Submitted {props.selectedTicket.formattedWaitTime} ago</h2>
+      <h4><em>{props.selectedTicket.issue}</em></h4>
     </div>
   );
 }
 
-ListItemDetail.propTypes = {
-  selectedItem: PropTypes.object
+ListTicketDetail.propTypes = {
+  selectedTicket: PropTypes.object
 };
 
-export default ListItemDetail;
+export default ListTicketDetail;

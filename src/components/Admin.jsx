@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import List from './List';
-import ListItemDetail from './ListItemDetail';
+import ListTicketDetail from './ListTicketDetail';
 
 function Admin(props){
   console.log(props.currentRouterPath);
-  let optionalSelecedItemContent = null;
-  if (props.selectedItem != null){
-    optionalSelecedItemContent = <ListItemDetail selectedItem={props.itemList[props.selectedItem]} />;
+  let optionalSelecedTicketContent = null;
+  if (props.selectedTicket != null){
+    optionalSelecedTicketContent = <ListTicketDetail selectedTicket={props.ticketList[props.selectedTicket]} />;
   }
   return(
     <div>
       <h2>Admin</h2>
-      {optionalSelecedItemContent}
+      {optionalSelecedTicketContent}
       <List
-        itemList={props.itemList}
+        ticketList={props.ticketList}
         currentRouterPath={props.currentRouterPath}
-        onItemSelection={props.onItemSelection}
+        onTicketSelection={props.onTicketSelection}
       />
     </div>
   );
 }
 
 Admin.propTypes = {
-  itemList: PropTypes.array,
+  ticketList: PropTypes.array,
   currentRouterPath: PropTypes.string,
-  onItemSelection: PropTypes.func.isRequired,
-  selectedItem: PropTypes.string
+  onTicketSelection: PropTypes.func.isRequired,
+  selectedTicket: PropTypes.string
 };
 
 export default Admin;

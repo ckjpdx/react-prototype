@@ -2,10 +2,10 @@
 
 import React from 'react';
 import ConfirmationQuestions from './ConfirmationQuestions';
-import NewItemForm from './NewItemForm';
+import NewTicketForm from './NewTicketForm';
 import PropTypes from 'prop-types';
 
-class NewItemControl extends React.Component {
+class NewTicketControl extends React.Component {
 
   constructor(props) {
     super(props); // access a parent class's constructor
@@ -22,7 +22,7 @@ class NewItemControl extends React.Component {
   render(){
     let currentlyVisibleContent = null;
     if (this.state.formVisibleOnPage){
-      currentlyVisibleContent = <NewItemForm onNewItemCreation={this.props.onNewItemCreation}/>;
+      currentlyVisibleContent = <NewTicketForm onNewTicketCreation={this.props.onNewTicketCreation}/>;
     } else {
       currentlyVisibleContent = <ConfirmationQuestions onTroubleshootingConfirmation={this.handleTroubleshootingConfirmation}/>;
     }
@@ -35,8 +35,8 @@ class NewItemControl extends React.Component {
   }
 }
 
-NewItemControl.propTypes = {
-  onNewItemCreation: PropTypes.func
+NewTicketControl.propTypes = {
+  onNewTicketCreation: PropTypes.func
 };
 
-export default NewItemControl;
+export default NewTicketControl;

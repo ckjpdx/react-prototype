@@ -1,6 +1,6 @@
-import itemListReducer from './../../src/reducers/item-list-reducer';
+import ticketListReducer from './../../src/reducers/ticket-list-reducer';
 
-describe('itemListReducer', () => {
+describe('ticketListReducer', () => {
 
   let action;
   const sampleTicketData = {
@@ -12,11 +12,11 @@ describe('itemListReducer', () => {
   };
 
   test('Should return default state if no action type is recognized', () => {
-    expect(itemListReducer({}, {type: null})).toEqual({});
+    expect(ticketListReducer({}, {type: null})).toEqual({});
   });
 
-  test('Should successfully add new ticket data to masterItemList', () => {
-    const {names, location, issue, timeOpen, id} = sampleItemData;
+  test('Should successfully add new ticket data to masterTicketList', () => {
+    const {names, location, issue, timeOpen, id} = sampleTicketData;
     action = {
       type: 'ADD_TICKET',
       names: names,

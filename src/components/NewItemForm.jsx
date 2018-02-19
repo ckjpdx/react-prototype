@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 
-function NewItemForm(props){
+function NewTicketForm(props){
   console.log(props);
   let _names = null;
   let _location = null;
   let _issue = null;
-  function handleItemFormSubmission(event){
+  function handleTicketFormSubmission(event){
     event.preventDefault();
-    props.onNewItemCreation({
+    props.onNewTicketCreation({
       names: _names.value,
       location: _location.value,
       issue: _issue.value,
@@ -20,8 +20,8 @@ function NewItemForm(props){
     _issue.value = '';
   }
 
-  NewItemForm.propTypes = {
-    onNewItemCreation: PropTypes.func
+  NewTicketForm.propTypes = {
+    onNewTicketCreation: PropTypes.func
   };
 
   return (
@@ -33,7 +33,7 @@ function NewItemForm(props){
           margin: 5px auto;
         }
       `}</style>
-      <form onSubmit={handleItemFormSubmission}>
+      <form onSubmit={handleTicketFormSubmission}>
         <input
           type='text'
           id='names'
@@ -54,6 +54,6 @@ function NewItemForm(props){
   );
 }
 
-export default NewItemForm;
+export default NewTicketForm;
 
 // onSubmit events only fire correctly if the form button includes a type='submit' property
