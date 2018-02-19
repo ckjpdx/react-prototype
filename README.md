@@ -282,3 +282,4 @@ MyExampleComponent.propTypes = {
 
 ## Vocabulary
 * Reconciliation
+* Destructuring: `const { names, location, issue, timeOpen, id } = sampleTicketData;`

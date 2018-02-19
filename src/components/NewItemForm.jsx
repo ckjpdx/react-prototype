@@ -8,7 +8,12 @@ function NewItemForm(props){
   let _issue = null;
   function handleItemFormSubmission(event){
     event.preventDefault();
-    props.onNewItemCreation({names: _names.value, location: _location.value, issue: _issue.value, timeOpen: new Moment()});
+    props.onNewItemCreation({
+      names: _names.value,
+      location: _location.value,
+      issue: _issue.value,
+      timeOpen: new Moment()
+    });
     _names.value = '';
     _location.value = '';
     _issue.value = '';
