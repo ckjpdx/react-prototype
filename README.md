@@ -1,7 +1,7 @@
 # React Prototype
 ## Setup
 ### Terminal Installation
-Atom: (in case of React errors):
+Atom, compatible version (in case of React errors):
 * apm i react@0.16.2
 
 Node:
@@ -25,6 +25,9 @@ Node:
 * npm i file-loader@1.1.6 --sav-dev
 * npm i uuid@3.2.1
 * npm i moment@2.18.1
+* npm i jest@20.0.4 --save-dev
+* npm i jest@20.0.4 -g
+* npm i babel-jest@20.0.3 --save-dev
 
 ### .gitignore
 ```
