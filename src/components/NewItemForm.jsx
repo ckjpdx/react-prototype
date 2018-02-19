@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Moment from 'moment';
 
 function NewItemForm(props){
+  console.log(props);
   let _names = null;
   let _location = null;
   let _issue = null;
@@ -25,6 +26,13 @@ function NewItemForm(props){
 
   return (
     <div>
+      <style jsx>{`
+        input, textarea {
+          width: 80%;
+          display: block;
+          margin: 5px auto;
+        }
+      `}</style>
       <form onSubmit={handleItemFormSubmission}>
         <input
           type='text'

@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import { AppContainer } from 'react-hot-loader';
 import { HashRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import itemListReducer from './reducers/item-list-reducer';
+import { Provider } from 'react-redux';
+
+
+const store = createStore(itemListReducer);
 
 // render > creates a component-type const named "render" that acts as entry point for "App"
 // ReactDOM.render akes arguments as: (what, where)
@@ -12,11 +18,11 @@ import { HashRouter } from 'react-router-dom';
 
 const render = (Component) => {
   ReactDOM.render(
-    <AppContainer>
-      <HashRouter>
+    <HashRouter>
+      <Provider store={store}>
         <Component/>
-      </HashRouter>
-    </AppContainer>,
+      </Provider>
+    </HashRouter>,
     document.getElementById('react-app-root')
   );
 };

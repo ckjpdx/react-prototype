@@ -28,6 +28,8 @@ Node:
 * npm i jest@20.0.4 --save-dev
 * npm i jest@20.0.4 -g
 * npm i babel-jest@20.0.3 --save-dev
+* npm i redux@3.7.2 --save
+* npm i react-redux@5.0.6 --save
 
 ### .gitignore
 ```
