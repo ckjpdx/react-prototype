@@ -1,14 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import { connect } from 'react-redux';
 
 function NewTicketForm(props){
-  console.log(props);
   let _names = null;
   let _location = null;
   let _issue = null;
   function handleTicketFormSubmission(event){
+    const { dispatch } = props;
     event.preventDefault();
+    const action = {
+      type: 'ADD_TICKET',
+      id: null,
+      names: _names.value,
+      location: _location.value,
+      issue: _issue.value,
+      timeOpen: new Moment()
+    };
+    dispatch(action);
+
     props.onNewTicketCreation({
       names: _names.value,
       location: _location.value,
@@ -54,6 +65,6 @@ function NewTicketForm(props){
   );
 }
 
-export default NewTicketForm;
+export default connect()(NewTicketForm);
 
 // onSubmit events only fire correctly if the form button includes a type='submit' property
