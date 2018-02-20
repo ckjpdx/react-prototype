@@ -95,9 +95,12 @@ React relies on __functional programming__, not object oriented programming.
 Object-oriented programming organizes logic around the things an application manages, whereas functional programming organizes an application around the actions it performs.
 
 ### Pure Functions
-React functions (components) accept arguments (props) and return a value (React elements). React is pretty flexible but it has a single strict rule: All React components must act like pure functions with respect to their props. There are two things that differentiate pure functions from normal old functions:
+React functions (components) accept arguments (props) and return a value (React elements). React is pretty flexible but it has a single strict rule: All React components must act like pure functions with respect to their props. By only ever updating state in pure functions, we ensure no unintended side effects occur, and that only data we're explicitly updating will change. What differentiates pure functions from normal functions:
 * Pure functions' return values are determined using only provided input values.
 * Pure functions do not ever alter external state or application data.
+* Always returns the same output for a given input.
+* Never affects the value of keys named outside their scope.
+* Does not rely on external, mutable values (API's, data from databases, application state, etc.)
 
 ## Components
 Basic building blocks of React apps. Everything in React is a component.
@@ -215,31 +218,118 @@ via Routed Element Component:
 <Route path='/component' render={() => <ComponentName propName={this.state.property} />} />
 ```
 
-### State
+## State
 In React, state refers to the current condition and/or circumstance of a component or other relevant data. State is data in an application that is dynamic. If a component needs to alter data, that data must be stored in something called state, never a prop; Props are read-only! States are fluid and ever-changing, props are not. Components should only update their own state. To make your UI interactive, you need to be able to trigger changes to your underlying data model.
 
 *Not all components are capable of possessing state!*
+State is:
+* user input
+* info from APIs
 
 State is not:
 * static
 * passed in from a parent via props
 * computed based on any other state or props in your component.
 
-State is:
-* user input
-* info from APIs
-
-#### Local State
+### Local State
 State is only ever used in the control components. It never leaves the file, nor is it referenced elsewhere. This kind of self-contained state is called local state. State to hide/show content is a common example of local state.
 
-#### Application State
+### Application State
 Unlike local state, application state is shared and used throughout multiple components. Application state is usually (but not always) the main "type" of data an application is responsible for working with. Application state must be stored in a location where it can be passed down to all components that use it.
 
 ### Lifting State
 When we work with state that affects multiple components, we must find the components' closest common parent, and pass the data up to that parent. This is called lifting state. The parent then passes the data down to any children that require it. Instead of always placing data at the very top of the component tree, we only place it as "high" as necessary. That is, the closest common ancestor of all components that need the application state data. This keeps React applications performant by ensuring data is only loaded in the areas that absolutely require it.
 
 ### Altering State with setState()
-State cannot be altered directly. We can only alter state using setState(), which only takes a key value pair.
+State cannot be properly altered directly. We can only alter state using setState(), which only takes a key value pair.
+
+## Redux
+Redux requires a store, at least one reducer, and actions. We also need to render and subscribe to our store to display its contents in the DOM.
+* getState() returns the store's current state.
+* dispatch() sends actions to change state.
+* subscribe() registers a callback that is invoked when the store's state is updated.
+
+Redux Reducer
+```
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'DO_ACTION':
+      let newNumberProperty = state.numberProperty + 1;
+      let newState = {
+        dataProperty: state.dataProperty,
+        numberProperty: newNumberProperty,
+      }
+      return newState;
+    default:
+      return state;
+  }
+}
+```
+Redux Subscribe
+```
+const render = () {
+  ...
+}
+store.subscribe(render);
+```
+.subscribe() is a callback that's automatically invoked whenever the Redux store is updated with an action.
+
+### Store: The Single Source of Truth
+Create the store with createStore(), and pass a reducer as an argument:
+```
+const { createStore } = Redux;
+const store = createStore(reducer);
+```
+In a Redux app state must be stored as an object tree in something called a store. An object tree (aka state tree) is an object that can contain multiple slices of state. Stores are a Redux-managed location to store application state.
+
+#### Immutable State
+Redux state is strictly read-only. The only way to change state in Redux is to dispatch an action. The action communicates our intention to change state to the store. *This means no usage of setState() to update state!*
+
+### Reducers
+Reducer communicates desired state mutations to the store via actions. When creating a reducer we provide initialState as an argument.
+*Reducers should only be provided the state slice they handle.*
+```
+const reducer = (state = initialState, action) => {
+  let newState;
+  switch (action.type) {
+    case 'ACTION_ONE':
+      // any necessary logic
+      newState = {
+        firstStateItem: state.firstStateItem,
+        secondStateItem: state.secondStateItem,
+        stateItemBeingChanged: action.newUpdatedStateValue,
+      }
+      return newState;
+    case 'ACTION_TWO':
+      // any necessary logic
+      newState = {
+        firstStateItem: state.firstStateItem,
+        secondStateItem: state.secondStateItem,
+        stateItemBeingChanged: action.differentUpdatedStateValue,
+      }
+      return newState;
+    default:
+      return state;
+  }
+}
+```
+Reducers must be pure functions to avoid unintended side effects.  Any value that changes needs to come from an action in order for the reducer to remain pure. All state travels through reducers very often. It's important reducers are robust and bug-free.
+
+Update (or mutate) state in our store. Reducers communicate our intended actions to the store. Reducers are just functions that take current state and an action as arguments. They create a new version of state using this information, similar to how setState() works.
+
+Generally, each slice of state in the Redux store has its own dedicated reducer. Because an application can have many slices of state, Redux apps will often have many different reducers.
+
+### Actions (.dispatch())
+```
+store.dispatch({
+  type: 'ACTION_ONE',
+  newUpdatedStateValue: 'example state value'
+});
+```
+Actions are dispatched when we want to trigger a state mutation. Actions are the only way to invoke state updates in Redux. Actions tell reducers that something has happened, and that the reducer should change the store's state in response. They're dispatched to the Redux store and handled by reducers. The reducer receives the action and executes logic based on the action's type that alters state. Data included with the action is called a payload.
+
+### Changes are Made with Pure Functions
+Redux also requires we only make changes to state using pure functions. As we discussed in the Component Lifecycle Methods lesson last week, a pure function is a function that:
 
 ## Unique IDs (UUID) & Mapped Component Lists
 When multiple instances of the same component in the same spot occurs, unique keys are very important, because they allow React to differentiate between these similar components, and hone in on any that may need to be updated individually, instead of re-rendering them all.
