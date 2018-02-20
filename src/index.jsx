@@ -10,6 +10,10 @@ import { Provider } from 'react-redux';
 
 const store = createStore(ticketListReducer);
 
+let unsubscribe = store.subscribe(()=>
+console.log(store.getState())
+);
+
 // render > creates a component-type const named "render" that acts as entry point for "App"
 // ReactDOM.render akes arguments as: (what, where)
 // AppContainer equired by React-Hot-Loader for loading and error logs
