@@ -1,6 +1,5 @@
 import React from 'react'; // always import core React library
 import { Switch, Route } from 'react-router-dom';
-import { v4 } from 'uuid';
 import NewTicketControl from './NewTicketControl';
 import Header from './Header';
 import List from './List';
@@ -16,7 +15,6 @@ class App extends React.Component {
       masterTicketList: {},
       selectedTicket: null
     };
-    this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
     this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
   }
 
@@ -36,15 +34,6 @@ class App extends React.Component {
     Object.keys(newMasterTicketList).forEach(ticketId =>
       newMasterTicketList[ticketId].formattedWaitTime = newMasterTicketList[ticketId].timeOpen.fromNow(true)
     );
-    this.setState({masterTicketList: newMasterTicketList});
-  }
-
-  handleAddingNewTicketToList(newTicket){
-    let newTicketId = v4();
-    let newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
-      [newTicketId]: newTicket
-    });
-    newMasterTicketList[newTicketId].formattedWaitTime = newMasterTicketList[newTicketId].timeOpen.fromNow(true);
     this.setState({masterTicketList: newMasterTicketList});
   }
 
@@ -74,8 +63,7 @@ class App extends React.Component {
             <List ticketList={this.state.masterTicketList} />} />
 
           <Route path='/newticket' render={() =>
-            <NewTicketControl
-              onNewTicketCreation={this.handleAddingNewTicketToList} />} />
+            <NewTicketControl />} />
 
           <Route path='/admin' render={(props) =>
             <Admin
