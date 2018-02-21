@@ -8,8 +8,9 @@ function NewTicketForm(props){
   let _location = null;
   let _issue = null;
   function handleTicketFormSubmission(event){
-    const { dispatch } = props;
     event.preventDefault();
+    console.log('handleTicketFormSubmission');
+    const { dispatch } = props;
     const action = {
       type: 'ADD_TICKET',
       id: v4(),

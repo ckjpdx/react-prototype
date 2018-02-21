@@ -247,43 +247,30 @@ State cannot be properly altered directly. We can only alter state using setStat
 Redux requires a store, at least one reducer, and actions. We also need to render and subscribe to our store to display its contents in the DOM.
 * getState() returns the store's current state.
 * dispatch() sends actions to change state.
-* subscribe() registers a callback that is invoked when the store's state is updated.
+* subscribe() registers a callback that is invoked when the store's state is updated. This callback is automatically invoked whenever the Redux store is updated with an action.
 
-Redux Reducer
+Components connected to redux store do not need to rely on getting information from their parents via props; info now comes directing from store.
+
+### Migrating from Props to Redux
+* Import connect to components:
 ```
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'DO_ACTION':
-      let newNumberProperty = state.numberProperty + 1;
-      let newState = {
-        dataProperty: state.dataProperty,
-        numberProperty: newNumberProperty,
-      }
-      return newState;
-    default:
-      return state;
-  }
+import { connect } from 'react-redux';
+...
+export default connect()(Ticket);
+```
+* Instead of using onEventDoThing prop, use a local handleEventFunc function.
+```
+function handleEventFunc(parameter){
+  const { dispatch } = props;
+  const action = {
+    type: 'DO_ACTION',
+    keyName: parameter
+  };
+  dispatch(action);
 }
 ```
-Redux Subscribe
-```
-const render = () {
-  ...
-}
-store.subscribe(render);
-```
-.subscribe() is a callback that's automatically invoked whenever the Redux store is updated with an action.
-
-### Store: The Single Source of Truth
-Create the store with createStore(), and pass a reducer as an argument:
-```
-const { createStore } = Redux;
-const store = createStore(reducer);
-```
-In a Redux app state must be stored as an object tree in something called a store. An object tree (aka state tree) is an object that can contain multiple slices of state. Stores are a Redux-managed location to store application state.
-
-#### Immutable State
-Redux state is strictly read-only. The only way to change state in Redux is to dispatch an action. The action communicates our intention to change state to the store. *This means no usage of setState() to update state!*
+### Presentational Components vs Container Components
+Presentational components are only for styling. Container components should retrieve data from the Redux store.
 
 ### Reducers
 Reducer communicates desired state mutations to the store via actions. When creating a reducer we provide initialState as an argument.
@@ -318,6 +305,27 @@ Reducers must be pure functions to avoid unintended side effects.  Any value tha
 Update (or mutate) state in our store. Reducers communicate our intended actions to the store. Reducers are just functions that take current state and an action as arguments. They create a new version of state using this information, similar to how setState() works.
 
 Generally, each slice of state in the Redux store has its own dedicated reducer. Because an application can have many slices of state, Redux apps will often have many different reducers.
+
+#### Redux Subscribe
+```
+const render = () {
+  ...
+}
+store.subscribe(render);
+```
+#### Root Reducers
+It's common practice to combine reducers in an index.js file in the src/reducers directory named index.js. This reducers/index.js file is something called a *module index*, a file responsible for retrieving misc. pieces of logic from the other files in its directory and importing it all in one big module.
+
+### Store: The Single Source of Truth
+Create the store with createStore(), and pass a reducer as an argument:
+```
+const { createStore } = Redux;
+const store = createStore(reducer);
+```
+In a Redux app state must be stored as an object tree in something called a store. An object tree (aka state tree) is an object that can contain multiple slices of state. Stores are a Redux-managed location to store application state.
+
+#### Immutable State
+Redux state is strictly read-only. The only way to change state in Redux is to dispatch an action. The action communicates our intention to change state to the store. *This means no usage of setState() to update state!*
 
 ### Actions (.dispatch())
 ```

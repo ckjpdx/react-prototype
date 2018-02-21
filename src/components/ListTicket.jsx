@@ -1,9 +1,8 @@
 import React from 'react'; // always import core React library
 import PropTypes from 'prop-types'; // needed where PropTypes are declared - under the function code block
-// import Moment from 'moment';
-// the component is a function! the name is capitalized and matches the filename
+import { connect } from 'react-redux';
+
 function ListTicket(props){ // requires "props" parameter to store incoming properties
-  // styles live inside the component they affect
   let css = {
     backgroundColor: '#ecf0f1',
     fontFamily: 'sans-serif',
@@ -18,6 +17,14 @@ function ListTicket(props){ // requires "props" parameter to store incoming prop
   let cssSpan = {
     fontWeight: 900
   };
+  function handleSavingSelectedTicket(ticketId){
+    const { dispatch } = props;
+    const action = {
+      type: 'SELECT_TICKET',
+      ticketId: ticketId
+    };
+    dispatch(action);
+  }
   const ticketInfo =
     <div style={css}>
       <style jsx>{`
@@ -37,9 +44,8 @@ function ListTicket(props){ // requires "props" parameter to store incoming prop
 
   // the return is JSX that renders content
   if (props.currentRouterPath === '/admin'){
-    //try removing the curly brace
     return(
-      <div onClick={() => {props.onTicketSelection(props.ticketId);}}>
+      <div onClick={() => {handleSavingSelectedTicket(props.ticketId);}}>
         {ticketInfo}
       </div>
     );
@@ -56,10 +62,9 @@ ListTicket.propTypes = {
   names: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   issue: PropTypes.string,
-  formattedWaitTime: PropTypes.string.isRequired,
   currentRouterPath: PropTypes.string,
-  onTicketSelection: PropTypes.func,
   ticketId: PropTypes.string.isRequired
 };
+// formattedWaitTime: PropTypes.string.isRequired,
 
-export default ListTicket;
+export default connect()(ListTicket);

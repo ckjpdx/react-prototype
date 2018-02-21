@@ -6,19 +6,12 @@ import List from './List';
 import Admin from './Admin';
 import Error404 from './Error404';
 import reactLogo from '../assets/images/react-logo.svg';
-import { connect } from './react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // import Moment from 'moment';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      selectedTicket: null
-    };
-    this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
-  }
 
   componentDidMount(){
     this.waitTimeUpdateTimer = setInterval(()=>
@@ -37,10 +30,6 @@ class App extends React.Component {
     //   newMasterTicketList[ticketId].formattedWaitTime = newMasterTicketList[ticketId].timeOpen.fromNow(true)
     // );
     // this.setState({masterTicketList: newMasterTicketList});
-  }
-
-  handleChangingSelectedTicket(ticketId){
-    this.setState({selectedTicket: ticketId});
   }
 
   render(){
@@ -69,10 +58,7 @@ class App extends React.Component {
 
           <Route path='/admin' render={(props) =>
             <Admin
-              ticketList={this.props.masterTicketList}
-              currentRouterPath={props.location.pathname}
-              onTicketSelection={this.handleChangingSelectedTicket}
-              selectedTicket={this.state.selectedTicket}/>} />
+              currentRouterPath={props.location.pathname}/>} />
 
           <Route component={Error404} />
         </Switch>
@@ -80,14 +66,15 @@ class App extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    masterTicketList: state
-  }
-}
 
 App.propTypes = {
   masterTicketList: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    masterTicketList: state.masterTicketList
+  };
 };
 
 export default withRouter(connect(mapStateToProps)(App));

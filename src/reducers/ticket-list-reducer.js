@@ -1,6 +1,6 @@
 export default (state = {}, action) => {
   switch (action.type){
-    case 'ADD_ITEM':
+    case 'ADD_TICKET':
     const {names, location, issue, timeOpen, id} = action;
     let newState = Object.assign({}, state, {
       [id]: {
@@ -11,6 +11,7 @@ export default (state = {}, action) => {
         id: id
       }
     });
+    console.log('ADD_TICKET in reducer');
     return newState;
   default:
     return state;
