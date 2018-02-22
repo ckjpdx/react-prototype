@@ -244,6 +244,8 @@ When we work with state that affects multiple components, we must find the compo
 State cannot be properly altered directly. We can only alter state using setState(), which only takes a key value pair.
 
 ## Redux
+Flux Architecture is not a framework or a library. It is simply a new kind of architecture that complements React and the concept of Unidirectional Data Flow.
+
 Redux requires a store, at least one reducer, and actions. We also need to render and subscribe to our store to display its contents in the DOM.
 * getState() returns the store's current state.
 * dispatch() sends actions to change state.
