@@ -1,4 +1,5 @@
 import ticketListReducer from './../../src/reducers/ticket-list-reducer';
+import c from './../../src/constants';
 
 describe('ticketListReducer', () => {
 
@@ -18,7 +19,7 @@ describe('ticketListReducer', () => {
   test('Should successfully add new ticket data to masterTicketList', () => {
     const {names, location, issue, timeOpen, id} = sampleTicketData;
     action = {
-      type: 'ADD_TICKET',
+      type: c.ADD_TICKET,
       names: names,
       location: location,
       issue: issue,
@@ -38,7 +39,25 @@ describe('ticketListReducer', () => {
   test('Should add freshly-calculated Moment-formatted wait time to ticket entry', () => {
     const { names, location, issue, timeOpen, id } = sampleTicketData;
     action = {
-      type: 'UPDATE_TIME',
+      type: c.ADD_TICKET,
+      formattedWaitTime: '4 minutes',
+      id: id
+    };
+    expect(ticketListReducer({ [id] : sampleTicketData }, action)).toEqual({
+      [id] : {
+        names: names,
+        location: location,
+        issue: issue,
+        timeOpen: timeOpen,
+        id: id,
+        formattedWaitTime: '4 minutes'
+      }
+    });
+  });
+  test('Should add freshly-calculated Moment-formatted wait time to ticket entry', () => {
+    const { names, location, issue, timeOpen, id } = sampleTicketData;
+    action = {
+      type: c.UPDATE_TIME,
       formattedWaitTime: '4 minutes',
       id: id
     };

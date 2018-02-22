@@ -251,6 +251,13 @@ Redux requires a store, at least one reducer, and actions. We also need to rende
 
 Components connected to redux store do not need to rely on getting information from their parents via props; info now comes directing from store.
 
+### Types of Redux State
+Most applications deal with multiple types of data, which can be broadly divided into three categories:
+* Domain data: data that the application needs to show, use, or modify (such as "all of the Todos retrieved from the server")
+* App state: data that is specific to the application's behavior (such as "Todo #5 is currently selected", or "there is a request in progress to fetch Todos")
+* UI state: data that represents how the UI is currently displayed (such as "The EditTodo modal dialog is currently open")
+*Because the store represents the core of your application, you should define your state shape in terms of your domain data and app state, not your UI component tree.*
+
 ### Migrating from Props to Redux
 * Import connect to components:
 ```

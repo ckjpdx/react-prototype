@@ -1,8 +1,9 @@
-import React from 'react'; // always import core React library
-import PropTypes from 'prop-types'; // needed where PropTypes are declared - under the function code block
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import c from './../constants';
 
-function ListTicket(props){ // requires "props" parameter to store incoming properties
+function ListTicket(props){
   let css = {
     backgroundColor: '#ecf0f1',
     fontFamily: 'sans-serif',
@@ -20,7 +21,7 @@ function ListTicket(props){ // requires "props" parameter to store incoming prop
   function handleSavingSelectedTicket(ticketId){
     const { dispatch } = props;
     const action = {
-      type: 'SELECT_TICKET',
+      type: c.SELECT_TICKET,
       ticketId: ticketId
     };
     dispatch(action);
@@ -42,14 +43,13 @@ function ListTicket(props){ // requires "props" parameter to store incoming prop
       </ul>
     </div>;
 
-  // the return is JSX that renders content
   if (props.currentRouterPath === '/admin'){
     return(
       <div onClick={() => {handleSavingSelectedTicket(props.ticketId);}}>
         {ticketInfo}
       </div>
     );
-  } else { // YA GOTTA WRAP THE RETURN IN A DIV, YOU JUST GOTTA
+  } else {
     return (
       <div>
         {ticketInfo}
@@ -57,7 +57,7 @@ function ListTicket(props){ // requires "props" parameter to store incoming prop
     );
   }
 }
-// import PropTypes at top, then attach propTypes as property to function with an object that has key value pairs for checking types
+
 ListTicket.propTypes = {
   names: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
@@ -65,6 +65,5 @@ ListTicket.propTypes = {
   currentRouterPath: PropTypes.string,
   ticketId: PropTypes.string.isRequired
 };
-// formattedWaitTime: PropTypes.string.isRequired,
 
 export default connect()(ListTicket);
