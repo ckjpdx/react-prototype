@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import c from './../constants';
 
-// import Moment from 'moment';
-
 class App extends React.Component {
 
   componentDidMount(){

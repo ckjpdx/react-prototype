@@ -37,58 +37,6 @@ Node:
 node_modules  
 build
 ```
-
-### webpack.config.js
-```
-const { resolve } = require('path');
-const webpack = require('webpack');
-
-module.exports = {
-
-  entry: [
-    resolve(__dirname, "src") + "/index.jsx"
-  ],
-
-  output: {
-    filename: 'app.bundle.js',
-    path: resolve(__dirname, 'build'),
-  },
-
-  resolve: {
-    extensions: [ '.js', '.jsx' ]
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        loader: "babel-loader",
-        exclude: /node_modules/,
-        options: {
-          presets: [
-            "es2015",
-            "react"
-          ]
-        }
-      },
-    ],
-  }
-};
-```
-### index.html
-```
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My First React Project</title>
-  </head>
-  <body>
-    <div id="react-app-root">
-    </div>
-  </body>
-  <script src="build/app.bundle.js"></script>
-</html>
-```
 # React Notes
 ## Functional Programming
 React relies on __functional programming__, not object oriented programming.
