@@ -13,12 +13,6 @@ let unsubscribe = store.subscribe(()=>
 console.log(store.getState())
 );
 
-// render > creates a component-type const named "render" that acts as entry point for "App"
-// ReactDOM.render akes arguments as: (what, where)
-// AppContainer equired by React-Hot-Loader for loading and error logs
-// Component = what to render
-// document.getElementById() = where to render
-
 const render = (Component) => {
   ReactDOM.render(
     <HashRouter>
